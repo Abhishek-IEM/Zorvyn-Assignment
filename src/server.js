@@ -25,12 +25,21 @@ async function start() {
   await connectDatabase(env.mongoUri);
   await ensureAdminUser();
 
-  app.listen(env.port, () => {
+  const server = app.listen(env.port, () => {
     console.log(`Server listening on port ${env.port}`);
+  });
+
+  server.on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      console.error(`Port ${env.port} is already in use`);
+    } else {
+      console.error("Server failed to start", error);
+    }
+    process.exit(1);
   });
 }
 
 start().catch((error) => {
-  console.error("Failed to start server", error);
+  console.error("Failed to start server", error.message || error);
   process.exit(1);
 });
