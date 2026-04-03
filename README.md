@@ -1,4 +1,4 @@
-# Finance Dashboard Backend (Production-Ready)
+# Finance Dashboard Backend
 
 A production-style Node.js + Express + MongoDB backend for finance data processing, access control, and dashboard analytics.
 
